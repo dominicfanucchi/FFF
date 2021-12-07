@@ -23,12 +23,12 @@ BEGIN
 
 		CALL GenerateID(@uID);
 
-		INSERT INTO User(UserID, Username, Password, PhoneNumber, CheckStat,)
-		VALUES (@uID, uName, pWord, phone, 'n', fName, lName);
+		INSERT INTO User(UserID, Username, Password, PhoneNumber, CheckStat)
+		VALUES (@uID, uName, pWord, phone, 'n');
 		SELECT Username AS username, NULL AS 'Error';
 	END IF;
 
-END;
+END
 
 //
 
@@ -44,7 +44,7 @@ BEGIN
 
 		CALL GenerateID(@uID);
 
-		INSERT INTO User(UserID, Username, Password, PhoneNumber, CheckStat, FName, LName)
+		INSERT INTO User(UserID, Username, Password, PhoneNumber, CheckStat)
 		VALUES (@uID,uName, pWord, phone, 'n');
 
 	ELSE
@@ -59,9 +59,11 @@ BEGIN
 
 	/* If not a duplicate, add as employee */
 	IF @empcount < 1 THEN
+
 		SELECT Name INTO @ShelterName FROM Shelter
 		WHERE Shelter.ShelterID = sID;
-		SELECT CURRENT_DATE() INTO @today
+
+		SELECT CURRENT_DATE() INTO @today;
 
 		INSERT INTO Employee(UserID, ShelterID, Name, HireDate)
 		VALUES (uID, sID, @ShelterName, today);
@@ -71,7 +73,7 @@ BEGIN
 
 	END IF;
 
-END;
+END
 
 //
 
@@ -95,9 +97,9 @@ BEGIN
 		END IF;
 	ELSE
 		SELECT NULL AS Username, "User not found" as 'Error';
-	END IF
+	END IF;
 	/* should've just made this a trigger */
-END;
+END
 
 //
 /* change to use username, not userid */
@@ -119,8 +121,8 @@ BEGIN
 		INSERT INTO Adopts(ShelterID, AnimalID, AdopterID, AdoptionDate, Price)
 		VALUES($sID, aID, @uID, @today, price);
 		DELETE FROM Animal WHERE Animal.AnimalID = aID;
-	END IF
-END;
+	END IF;
+END
 
 //
 
@@ -137,27 +139,26 @@ BEGIN
 
 	SELECT @useradopts;
 
-END;
+END
 
 //  
 
-CREATE PROCEDURE `GenerateID`(OUT @uID int(11))
+CREATE PROCEDURE `GenerateID`(OUT uID int)
 BEGIN
-	/* use OUT */ 
-	SELECT UserID INTO @uID FROM User
-	WHERE User.Username = 'nofunzone'
+	SELECT UserID INTO uID FROM User
+	WHERE User.Username = 'nofunzone';
 	
 	SELECT COUNT(*) INTO @exist FROM User
-	WHERE User.UserID = @uID;
+	WHERE User.UserID = uID;
 
 	WHILE @exist > 0 DO
-		SELECT FLOOR(RAND()*(99999999-10000000+1) + 10000000) INTO @uID;
+		SELECT FLOOR(RAND()*(99999999-10000000+1) + 10000000) INTO uID;
 
 		SELECT COUNT(*) INTO @exist FROM User
-		WHERE User.UserID = @uID;
+		WHERE User.UserID = uID;
 	END WHILE;
 
-END;
+END
 //
 
 DELIMITER ;
