@@ -24,9 +24,9 @@
 				<h2><center>Furry Friend Finder</center></h2>
 				<div class="collapse navbar-collapse" id="navbarResponsive">
 					<ul class="navbar-nav ml-auto">
-						<li class="nav-item active">
+						<!-- <li class="nav-item">
 							<a class="nav-link" href="#"></a>
-						</li>
+						</li> -->
 					</ul>
 				</div>
 			</div>

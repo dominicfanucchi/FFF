@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, intitial-scale=1.0, shrink-to-fit=no" />
-     
+    
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
@@ -24,9 +24,9 @@
 			<h2><center>Furry Friend Finder</center></h2>
 			<div class="collapse navbar-collapse" id="navbarResponsive">
 				<ul class="navbar-nav ml-auto">
-					<!-- <li class="nav-item active">
-						<a class="nav-link" href="login.php">Login</a>
-					</li> -->
+					<li class="nav-item">
+						<a class="nav-link" href="tables.php">Tables</a>
+					</li>
 					<li class="nav-item">
 						<a class="nav-link" href="register.php">Register with Us!</a>
 					</li>
@@ -145,7 +145,6 @@
 			</div>
 		</div>
 	</div> -->
-
 
 	<hr class="my-4">
 
