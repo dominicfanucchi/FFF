@@ -5,6 +5,7 @@ DROP PROCEDURE IF EXISTS AnimalAdoption;
 DROP PROCEDURE IF EXISTS AdoptionRequest;
 DROP PROCEDURE IF EXISTS GenerateID;
 DROP PROCEDURE IF EXISTS UsersAdoptions;
+DROP PROCEDURE IF EXISTS AdoptionsLastMonth;
 
 
 DELIMITER //
@@ -19,6 +20,8 @@ BEGIN
 	IF @usercount > 0 THEN
 		SELECT NULL as UserID, "Username already exists" as 'Error';
 	ELSE
+		/*Just declaring variable. Setting to ID i know will be in table to prevent
+			accidental insertion */
 		SET @uID = 55555555;
 
 		CALL GenerateID(@uID);
@@ -55,7 +58,7 @@ BEGIN
 	END IF;
 
 	SELECT COUNT(*) INTO @empcount from Employee
-	WHERE Employee.UserID = @uID
+	WHERE Employee.UserID = @uID;
 
 	/* If not a duplicate, add as employee */
 	IF @empcount < 1 THEN
@@ -69,7 +72,7 @@ BEGIN
 		VALUES (uID, sID, @ShelterName, today);
 		SELECT Username AS username, NULL AS 'Error';
 	ELSE
-		SELECT NULL AS username, "Employee already exists"
+		SELECT NULL AS username, "Employee already exists";
 
 	END IF;
 
@@ -87,9 +90,9 @@ BEGIN
 	SELECT COUNT(*) INTO @employeecount FROM Employee
 	WHERE Employee.UserID = @uID;
         
-	/* If user exists, delete */
+
 	IF @usercount > 0 THEN
-		DELETE FROM User WHERE User.Username = uName;
+		DELETE FROM User WHERE User.UserID = @uID;
 		DELETE FROM Adopter WHERE Adopter.UserID = @uID;
 		/* If user is an employee, delete that too */
 		IF @employeecount > 0 THEN
@@ -157,6 +160,18 @@ BEGIN
 		SELECT COUNT(*) INTO @exist FROM User
 		WHERE User.UserID = uID;
 	END WHILE;
+	
+END
+//
+
+CREATE PROCEDURE `AdoptionsLastMonth`()
+BEGIN
+	SET @toDate = NOW();
+	SET @fromDate = DATE_SUB(@today, INTERVAL 1 month);
+
+	SELECT * FROM Adopts
+	WHERE AdoptionDate >= @fromDate AND AdoptionDate <= @toDate;
+
 
 END
 //
