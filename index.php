@@ -155,6 +155,11 @@ session_start();
 		</div>
 	</div>
 
+	<!-- animal pic -->
+	<div class="animal-pic">
+		<p style="position:fixed;margin-left:auto;margin-right:auto;width:28%;" title="fff"><img src="images/fff.jpg" style="width:500px;height:420px;">
+	</div>
+
 	<!-- Cards -->
 	<!-- <div class="container-fluid padding">
 		<div class="row row-cols-6 row-cols-md-2 padding text-center card-deck">
