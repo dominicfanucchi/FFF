@@ -31,14 +31,17 @@ session_start();
 					<li class="nav-item">
 						<a class="nav-link" href="tables.php">Tables</a>
 					</li>
-					<!-- <li class="nav-item">
-						<a class="nav-link" href="login.php">Login</a>
-					</li> -->
+					<li class="nav-item">
+						<a class="nav-link" href="login.php">Employee</a>
+					</li>
 					<li class="nav-item">
 						<a class="nav-link" href="register.php">Register with Us!</a>
 					</li>
 					<li class="nav-item"> 
 						<button class="btn btn-outline-success" type="button" data-toggle="modal" data-target="#loginModal">Login</button>
+					</li>
+					<li class="nav-item"> 
+						<button class="btn btn-outline-success" type="button" data-toggle="modal" data-target="#EmployeeLogin">Employee</button>
 					</li>
 				</ul>
 			</div>
@@ -52,7 +55,7 @@ session_start();
 		<div class="modal-dialog modal-login">
 			<div class="modal-content">
 				<div class="modal-header">				
-					<h4 class="modal-title">Member Login</h4>
+					<h4 class="modal-title">User Login</h4>
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 				</div>
 				<div class="modal-body">
