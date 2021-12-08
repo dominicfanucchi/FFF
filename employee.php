@@ -77,15 +77,16 @@
 			</div>
 		</div>
 	</nav>
-	
-	<div class="container-fluid padding">
-		<div class="row welcome text-center">
-			<div class="col-12">
+
 	
 	<!-- welcome employee -->
 	<hr class="my-4">
 
 	<main class="flex-fill">
+
+	<div class="container-fluid padding">
+		<div class="row welcome text-center">
+			<div class="col-12">
 	
 	<h1>
 	<?php
@@ -108,7 +109,11 @@
 	
 	?>
 	</h1>	
-
+			</div>
+			<hr>
+		</div>
+	</div>
+	
 	<!-- Shelter Nav -->
 	<div class="dropdown">
 		<button class="dropbtn">Shelters</button>
