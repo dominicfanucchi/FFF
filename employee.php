@@ -166,11 +166,25 @@
 	if (isset($_POST["dropdown"])) {
 		for($i = 0; $i < count($rows); $i++) {
 			if ($rows[$i]['Name'] == $_POST['dropdown']) {
-				echo "You entered " . $_POST['dropdown'] . " <br>";
+				echo "You chose " . $_POST['dropdown'] . " <br>";
 				//echo "$rowtext <br>"
 			}
 		}
 	}	
+	?>
+
+	<form name="my_form" method="post" action="employee.php">
+		Username: <input type="text" name="username_delete" placeholder="username"></br>
+		<input type="submit" name="DeleteUser" value="delete user"/>
+	</form>	
+
+	<?php
+	if (isset($_POST['DeleteUser'])) {
+		unset($_POST['DeleteUser']);
+		$db = get_connection();
+		$deletion = $db->prepare("CALL DeleteUser(?)");
+		$deletion->bind_param('s', $_SESSION["Username"]);
+	}
 	?>
 
 	<hr class="my-4">
