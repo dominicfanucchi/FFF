@@ -84,11 +84,11 @@
 	<div class="container-fluid padding">
 		<div class="row welcome text-center">
 			<div class="col-12">
-				<h1 class="display-4">Dashboard</h1>
-<!--
+			<!--	<h1 class="display-4">Dashboard</h1> -->
+
 <h1>
 <?php
-/*
+
 require_once "config.php";
 
 if (isset($_SESSION["error"])) {
@@ -97,18 +97,17 @@ if (isset($_SESSION["error"])) {
 	die();
 }
 
-if (isset($_SESSION['user_id'])) {
-	echo "<a href='logout.php'>Log out</a><br>";
-	echo "Welcome, " . $_SESSION["username"];
+if (isset($_SESSION['UserID'])) {
+	echo "Welcome, " . $_SESSION["Username"];
 	// Code to handle registered user interactions
 }
 else {
 	header("Location: index.php");
 }
- */
+ 
 ?>
 </h1>
-          -->
+          
 			</div>
 			<hr>
 		</div>
