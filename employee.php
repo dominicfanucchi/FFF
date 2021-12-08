@@ -103,7 +103,7 @@
 	}
 
 	if (isset($_SESSION['UserID'])) {
-		echo "Welcome, " . $_SESSION["Username"];
+		echo "Welcome, " . $_SESSION["Username"] . ".";
 		// Code to handle registered user interactions
 	}
 	else {
@@ -172,6 +172,39 @@
 		}
 	}	
 	?>
+	<?php
+	include_once('config.php');
+
+	$db = get_connection();
+	$tableQuery = "select * from Shelter";
+	$result = mysqli_query($db, $tableQuery);
+	?>
+
+	<table align="center" border="1px" style="width:800px; line-height: 30px;">
+		<tr>
+			<th colspan="5"><h2>Animal Shelters</h2></th>
+		</tr>
+		<tr>
+			<th>Shelter ID</th>
+			<th>Shelter Name</th>
+			<th>Address</th>
+			<th>City</th>
+			<th>Phone #</th>
+		</tr>
+	<?php
+		while($rows = mysqli_fetch_assoc($result)) {
+	?>
+			<tr>
+				<td><?php echo $rows['ShelterID']; ?></td>
+				<td><?php echo $rows['Name']; ?></td>
+				<td><?php echo $rows['Address']; ?></td>
+				<td><?php echo $rows['City']; ?></td>
+				<td><?php echo $rows['PhoneNumber']; ?></td>
+			</tr>		
+	<?php	
+		}
+	?>
+	</table>
 	<hr class="my-4">
 	<form name="my_form" method="post" action="employee.php">
 		Select a User to delete: <input type="text" name="Username" placeholder="username"><br/>
