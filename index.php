@@ -28,21 +28,21 @@ session_start();
 			<h2><center>Furry Friend Finder</center></h2>
 			<div class="collapse navbar-collapse" id="navbarResponsive">
 				<ul class="navbar-nav ml-auto">
-					<li class="nav-item">
+					<!-- <li class="nav-item">
 						<a class="nav-link" href="tables.php">Tables</a>
+					</li> -->
+					<li class="nav-item">
+						<a class="nav-link" href="register.php">Register with Us!</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link" href="login.php">Employee</a>
 					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="register.php">Register with Us!</a>
-					</li>
 					<li class="nav-item"> 
 						<button class="btn btn-outline-success" type="button" data-toggle="modal" data-target="#loginModal">Login</button>
 					</li>
-					<li class="nav-item"> 
+					<!-- <li class="nav-item"> 
 						<button class="btn btn-outline-success" type="button" data-toggle="modal" data-target="#EmployeeLogin">Employee</button>
-					</li>
+					</li> -->
 				</ul>
 			</div>
 		</div>
