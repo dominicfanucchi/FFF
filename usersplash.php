@@ -145,7 +145,7 @@ else {
 	?>
 
 	<form action="usersplash.php" method="POST">
-		<label>Choose an Animal:</label>
+		<label name="Username">Choose an Animal:</label>
 	
 	<?php
 
@@ -160,10 +160,20 @@ else {
 
 	echo "</select>";
 	?>
-		<input type="submit">
+		<input type="submit" name="btn_adopt" value="adopt animal">
 	</form>
 
 	<?php
+	if (isset($_POST['btn_adopt'])) {
+		$db = get_connection();
+		$adoption = $_POST['btn_adopt'];
+		$sql = "CALL AnimalAdoptions('$adoption')";
+		$result = $db->query($sql);
+
+		//if ($adoption) {
+		//	echo "Animal Adopted";
+		//}
+	}	
 	//if (isset($_POST["something"])) {
 		//echo "You entered: " . $_POST['something'] . " <br>";
 	//}
@@ -175,8 +185,10 @@ else {
 				//echo "$rowtext <br>"
 			}
 		}
-	}	
+	}
+
 	?>
+	
 
 
 <!--Can add Potential Sidebar or just add clickable tabs on the side. Potentially a dropdown view -->
