@@ -31,10 +31,10 @@
 	?>
 			<tr>
 				<td><?php echo $rows['UserID']; ?></td>
-				<td><?php echo $rows['FName']; ?></td>
-				<td><?php echo $rows['LName']; ?></td>
+				<td><?php echo $rows['First Name']; ?></td>
+				<td><?php echo $rows['Last Name']; ?></td>
 				<td><?php echo $rows['AnimalID']; ?></td>
-				<td><?php echo $rows['Name']; ?></td>
+				<td><?php echo $rows['Animal Name']; ?></td>
                 <td><?php echo $rows['AdoptionDate']; ?></td>
 			</tr>		
 	<?php	

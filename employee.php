@@ -71,6 +71,9 @@
 						<a class="nav-link" href="login.php">Login</a>
 					</li> -->
 					<li class="nav-item">
+						<a class="nav-link" href="prev_adoptions.php">Previous Adoptions</a>
+					</li>
+					<li class="nav-item">
 						<a href="logout.php" class="btn btn-outline-success" role="button">Logout</a>
 					</li>
 				</ul>
@@ -113,7 +116,7 @@
 			<hr>
 		</div>
 	</div>
-	
+
 	<!-- Shelter Nav -->
 	<div class="dropdown">
 		<button class="dropbtn">Shelters</button>
