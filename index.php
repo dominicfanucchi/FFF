@@ -1,3 +1,7 @@
+<?php
+session_start();
+?>
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -26,6 +30,9 @@
 				<ul class="navbar-nav ml-auto">
 					<li class="nav-item">
 						<a class="nav-link" href="tables.php">Tables</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="login.php">Login</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link" href="register.php">Register with Us!</a>
@@ -69,6 +76,71 @@
 			</div>
 		</div>
 	</div>
+
+	<!-- PHP -->
+	<?php
+
+	require_once "config.php";
+
+	if (isset($_SESSION["error"])) {
+	    echo $_SESSION["error"];
+	    unset($_SESSION["error"]);
+	    die();
+	}
+
+	// If true, user is trying to log in
+	if (isset($_POST['Login'])) {
+	    unset($_POST['Login']);
+	    $db = get_connection();
+	    $username = $_POST['USERNAME'];
+	    $password = $_POST['PASSWORD'];
+	    $validation = $db->prepare("SELECT UserID, Username, Password FROM User WHERE Username=?");
+	    $validation->bind_param('s', $username);
+	    if ($validation->execute()) {
+	        //if ($valid_result = $validation->get_result()) {
+	        if (mysqli_stmt_bind_result($validation, $res_id, $res_user, $res_password)) {
+
+	            $result_count = 0;
+
+	            while ($validation->fetch()) {
+	                $result_count++;
+	            }
+
+	            if ($result_count == 0) {
+	                $_SESSION["error"] = "Error: the username and/or password combination was not found";
+	                header("Location: index.php");
+	            }
+	            else {
+	                // Verify user password
+	                //$resx = $valid_result->fetch_array(MYSQLI_ASSOC);
+	                $isGood = password_verify($password, $res_password);
+	                
+	                if ($isGood) {
+	                    $_SESSION["UserID"] = $res_id;
+	                    $_SESSION["Username"] = $res_user;
+
+	                    header("Location: index.php");
+	                }
+	                else {
+	                    $_SESSION["error"] = "Error: the username and/or password combination was not found";
+	                    header("Location: index.php");
+	                }
+	            }
+	        }
+	        else {
+	            echo "Error getting result: " . mysqli_error($db);
+	            die();
+	        }
+	    }
+	    else {
+	        echo "Error executing query: " . mysqli_error($db);
+	        die();
+	    }
+	}
+
+	?>
+
+	<div id="auth_result"></div>
 
 	<!-- Meet The Animals -->
 	<div class="container-fluid padding">
@@ -177,68 +249,6 @@
 	</footer>
 	</div>
 
-	<!-- PHP -->
-	<?php
-
-	require_once "config.php";
-
-	if (isset($_SESSION["error"])) {
-	    echo $_SESSION["error"];
-	    unset($_SESSION["error"]);
-	    die();
-	}
-
-	// If true, user is trying to log in
-	if (isset($_POST['Login'])) {
-	    unset($_POST['Login']);
-	    $db = get_connection();
-	    $username = $_POST['USERNAME'];
-	    $password = $_POST['PASSWORD'];
-	    $validation = $db->prepare("SELECT * FROM user WHERE username=?");
-	    $validation->bind_param('s', $username);
-	    if ($validation->execute()) {
-	        //if ($valid_result = $validation->get_result()) {
-	        if (mysqli_stmt_bind_result($validation, $res_id, $res_user, $res_password)) {
-
-	            $result_count = 0;
-
-	            while ($validation->fetch()) {
-	                $result_count++;
-	            }
-
-	            if ($result_count == 0) {
-	                $_SESSION["error"] = "Error: the username and/or password combination was not found";
-	                header("Location: index.php");
-	            }
-	            else {
-	                // Verify user password
-	                //$resx = $valid_result->fetch_array(MYSQLI_ASSOC);
-	                $isGood = password_verify($password, $res_password);
-	                
-	                if ($isGood) {
-	                    $_SESSION["user_id"] = $res_id;
-	                    $_SESSION["username"] = $res_user;
-
-	                    header("Location: register.php");
-	                }
-	                else {
-	                    $_SESSION["error"] = "Error: the username and/or password combination was not found";
-	                    header("Location: index.php");
-	                }
-	            }
-	        }
-	        else {
-	            echo "Error getting result: " . mysqli_error($db);
-	            die();
-	        }
-	    }
-	    else {
-	        echo "Error executing query: " . mysqli_error($db);
-	        die();
-	    }
-	}
-
-	?>
 
 	<!-- Bootstrap JS -->
 	<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>

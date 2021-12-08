@@ -33,17 +33,18 @@
 		</nav>
 
 		<main class="flex-fill">
+
 			<div class="row" style="padding-left: 20px;">
 				<form method="post" action="register.php" name="signup-form" class="col-12">
 					<div class="form-element">
 						<label>Username</label>
 						<i class="fa fa-user"></i>
-						<input type="text" name="USERNAME" pattern="[a-zA-Z0-9]+" required />
+						<input type="text" name="USERNAME" pattern="[a-zA-Z0-9]+"  />
 					</div>
 					<div class="form-element">
 						<label>Password</label>
 						<i class="fa fa-lock"></i>
-						<input type="password" name="PASSWORD" required />
+						<input type="password" name="PASSWORD" />
 					</div>
 					<div class="form-element">
 						<label>Phone</label>
@@ -53,6 +54,56 @@
 					<button type="submit" name="Register" value="Register">Register</button>
 				</form>
 			</div>
+
+<?php
+
+require_once "config.php";
+
+if (isset($_SESSION["error"])) {
+    echo $_SESSION["error"];
+    unset($_SESSION["error"]);
+    die();
+}
+
+if (isset($_POST['Register'])) {
+    unset($_POST['Register']);
+    $db = get_connection();
+
+    $username = $_POST['USERNAME'];
+    $password = $_POST['PASSWORD'];
+    $phone = $_POST['NUMBER'];
+
+    if (strlen($username) == 0 || strlen($password) == 0) {
+	    $_SESSION["error"] = "Username and/or Password and/or Number cannot be empty!";
+	    header("Location: register.php");
+    }
+
+    $statement = $db->prepare("CALL RegisterUser(?, ?, ?)");
+    $statement->bind_param('ssi', $username, password_hash($password, PASSWORD_DEFAULT), $phone);
+
+    if ($statement->execute()) {
+        mysqli_stmt_bind_result($statement, $res_id, $res_error);
+
+        $statement->fetch();
+
+        // If user id is null, then something went wrong in registration
+        if (is_null($res_id)) {
+            $_SESSION["error"] = $res_error;
+            header("Location: register.php");
+        }
+        else {
+            echo "Registered!";     // User won't see this, header() right after redirects
+            header("Location: login.php");
+        }
+    }
+    else {
+        echo "Error getting result: " . mysqli_error($db);
+        die();
+    }
+}
+?>
+
+		<div id=auth_result"></div>
 		</main>
 
 		<!-- Footer -->
@@ -68,54 +119,7 @@
 		</footer>
 	</div>
 	
-	<!-- PHP -->
-	<?php
-
-	require_once "config.php";
-
-	if (isset($_SESSION["error"])) {
-	    echo $_SESSION["error"];
-	    unset($_SESSION["error"]);
-	    die();
-	}
-
-	if (isset($_POST['Register'])) {
-	    unset($_POST['Register']);
-	    $db = get_connection();
-
-	    $uName = $_POST['USERNAME'];
-	    $pWord = $_POST['PASSWORD'];
-	    $phone = $_POST['NUMBER'];
-
-	    if (strlen($uName) == 0 || strlen($pWord) == 0) {
-		    $_SESSION["error"] = "Username and/or password cannot be empty!";
-		    header("Location: register.php");
-	    }
-
-	    $statement = $db->prepare("CALL RegisterUser(?, ?, ?)");
-	    $statement->bind_param('ss', $uName, password_hash($pWord, PASSWORD_DEFAULT), $phone);
-
-	    if ($statement->execute()) {
-	        mysqli_stmt_bind_result($statement, $res_id, $res_error);
-
-	        $statement->fetch();
-
-	        // If user id is null, then something went wrong in registration
-	        if (is_null($res_id)) {
-	            $_SESSION["error"] = $res_error;
-	            header("Location: register.php");
-	        }
-	        else {
-	            echo "Registered!";     // User won't see this, header() right after redirects
-	            header("Location: login.php");
-	        }
-	    }
-	    else {
-	        echo "Error getting result: " . mysqli_error($db);
-	        die();
-	    }
-	}
-	?>
+	
 	<!-- Bootstrap JS -->
 	<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF" crossorigin="anonymous"></script>

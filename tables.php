@@ -14,21 +14,26 @@
 	<title>Furry Friend Finder | Shelters</title>
 </head>
 <body>
-	<table align="center" border="1px" style="width:600px; line-height: 30px;">
+	<table align="center" border="1px" style="width:800px; line-height: 30px;">
 		<tr>
-			<th colspan="4"><h2>Animal Shelters</h2></th>
+			<th colspan="5"><h2>Animal Shelters</h2></th>
 		</tr>
 		<tr>
 			<th>Shelter ID</th>
-			<th>Second Header</th>
-			<th>Third Header</th>
-			<th>Fourth Header</th>
+			<th>Shelter Name</th>
+			<th>Address</th>
+			<th>City</th>
+			<th>Phone #</th>
 		</tr>
 	<?php
 		while($rows = mysqli_fetch_assoc($result)) {
 	?>
 			<tr>
 				<td><?php echo $rows['ShelterID']; ?></td>
+				<td><?php echo $rows['Name']; ?></td>
+				<td><?php echo $rows['Address']; ?></td>
+				<td><?php echo $rows['City']; ?></td>
+				<td><?php echo $rows['PhoneNumber']; ?></td>
 			</tr>		
 	<?php	
 		}

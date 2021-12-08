@@ -34,36 +34,24 @@
 
 		<main class="flex-fill">
 			<div class="row" style="padding-left: 20px;">
-			<form action="index.php" method="post">
+
+			<form action="login.php" method="post">
 				<div class="form-group">
 					<i class="fa fa-user"></i>
-					<input type="text" class="form-control" placeholder="Username" required="required" name="USERNAME">
+					<input type="text" class="form-control" placeholder="Username" name="USERNAME">
 				</div>
 				<div class="form-group">
 					<i class="fa fa-lock"></i>
-					<input type="password" class="form-control" placeholder="Password" required="required" name="PASSWORD">					
+					<input type="password" class="form-control" placeholder="Password" name="PASSWORD">					
 				</div>
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary btn-block btn-lg" value="Login">
+					<input type="submit" class="btn btn-primary btn-block btn-lg" value="Login" name="Login">
 				</div>
 			</form>
-			</div>
-		</main>
 
-		<!-- Footer -->
-		<footer class="navbar-light sticky-footer-wrapper">
-			<div class="container-fluid padding nope">
-				<div class="row text-center">
-					<div class="col-12">
-						<hr class="light-100">
-						<h5>&copy; Furry Friend Finder</h5>
-					</div>
-				</div>
 			</div>
-		</footer>
-	</div>
-	
-	<!-- PHP -->
+
+			<!-- PHP -->
 	<?php
 
 	require_once "config.php";
@@ -80,7 +68,7 @@
 	    $db = get_connection();
 	    $username = $_POST['USERNAME'];
 	    $password = $_POST['PASSWORD'];
-	    $validation = $db->prepare("SELECT * FROM user WHERE username=?");
+	    $validation = $db->prepare("SELECT UserID, Username, Password FROM User WHERE Username=?");
 	    $validation->bind_param('s', $username);
 	    if ($validation->execute()) {
 	        //if ($valid_result = $validation->get_result()) {
@@ -102,10 +90,10 @@
 	                $isGood = password_verify($password, $res_password);
 	                
 	                if ($isGood) {
-	                    $_SESSION["user_id"] = $res_id;
-	                    $_SESSION["username"] = $res_user;
+	                    $_SESSION["UserID"] = $res_id;
+	                    $_SESSION["Username"] = $res_user;
 
-	                    header("Location: register.php");
+	                    header("Location: index.php");
 	                }
 	                else {
 	                    $_SESSION["error"] = "Error: the username and/or password combination was not found";
@@ -125,6 +113,22 @@
 	}
 
 	?>
+	</main>
+
+		<!-- Footer -->
+		<footer class="navbar-light sticky-footer-wrapper">
+			<div class="container-fluid padding nope">
+				<div class="row text-center">
+					<div class="col-12">
+						<hr class="light-100">
+						<h5>&copy; Furry Friend Finder</h5>
+					</div>
+				</div>
+			</div>
+		</footer>
+	</div>
+	
+	
  
 	<!-- Bootstrap JS -->
 	<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
