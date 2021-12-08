@@ -60,7 +60,7 @@
 	<!-- Navigation -->
 	<nav class="navbar navbar-expand-md navbar-light">
 		<div class="container-fluid">
-			<a class="navbar-brand" href="index.php"><img id="logo" src="fourth_logo_round.png"></a>
+			<a class="navbar-brand" href="index.php"><img id="logo" src="images/fourth_logo_round.png"></a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
 				<span class="navbar-toggler-icon"></span>
 			</button>
@@ -71,58 +71,43 @@
 						<a class="nav-link" href="login.php">Login</a>
 					</li> -->
 					<li class="nav-item">
-						<a class="nav-link" href="register.php">Register with Us!</a>
-					</li>
-					<li class="nav-item"> 
-						<button class="btn btn-outline-success" type="button" data-toggle="modal" data-target="#loginModal">Login</button>
+						<a href="logout.php" class="btn btn-outline-success" role="button">Logout</a>
 					</li>
 				</ul>
 			</div>
 		</div>
 	</nav>
-	<hr class="my-4">
-
-	<main class="flex-fill">
-	<!-- Login Modal -->
-	<div id="loginModal" class="modal fade">
-		<div class="modal-dialog modal-login">
-			<div class="modal-content">
-				<div class="modal-header">				
-					<h4 class="modal-title">Member Login</h4>
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				</div>
-				<div class="modal-body">
-					<form action="index.php" method="post">
-						<div class="form-group">
-							<i class="fa fa-user"></i>
-							<input type="text" class="form-control" placeholder="Username" required="required" name="USERNAME">
-						</div>
-						<div class="form-group">
-							<i class="fa fa-lock"></i>
-							<input type="password" class="form-control" placeholder="Password" required="required" name="PASSWORD">					
-						</div>
-						<div class="form-group">
-							<input type="submit" class="btn btn-primary btn-block btn-lg" value="Login" name="Login">
-						</div>
-					</form>
-				</div>
-				<div class="modal-footer">
-					<a href="#">Forgot Password?</a>
-				</div>
-			</div>
-		</div>
-	</div>
 	
-	
-	<!-- Meet The Animals -->
 	<div class="container-fluid padding">
 		<div class="row welcome text-center">
 			<div class="col-12">
-				<h1 class="display-4">Welcome,  Employee!</h1>
-			</div>
-			<hr>
-		</div>
-	</div>
+	
+	<!-- welcome employee -->
+	<hr class="my-4">
+
+	<main class="flex-fill">
+	
+	<h1>
+	<?php
+
+	require_once "config.php";
+
+	if (isset($_SESSION["error"])) {
+		echo $_SESSION["error"];
+		unset($_SESSION["error"]);
+		die();
+	}
+
+	if (isset($_SESSION['UserID'])) {
+		echo "Welcome, " . $_SESSION["Username"];
+		// Code to handle registered user interactions
+	}
+	else {
+		header("Location: index.php");
+	}
+	
+	?>
+	</h1>	
 
 	<!-- Shelter Nav -->
 	<div class="dropdown">
