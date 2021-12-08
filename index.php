@@ -157,7 +157,7 @@ session_start();
 
 	<!-- animal pic -->
 	<div class="animal-pic">
-		<p style="position:fixed;margin-left:auto;margin-right:auto;width:28%;" title="fff"><img src="images/fff.jpg" style="width:500px;height:420px;">
+		<p style="margin-left:auto;margin-right:auto;width:28%;" title="fff"><img src="images/fff.jpg" style="width:500px;height:420px;">
 	</div>
 
 	<!-- Cards -->
