@@ -174,16 +174,20 @@
 	?>
 
 	<form name="my_form" method="post" action="employee.php">
-		Username: <input type="text" name="username_delete" placeholder="username"></br>
-		<input type="submit" name="DeleteUser" value="delete user"/>
+		Username: <input type="text" name="Username" placeholder="username"><br/>
+		<input type="submit" name="btn_delete" value="delete user"/>
 	</form>	
 
 	<?php
-	if (isset($_POST['DeleteUser'])) {
-		unset($_POST['DeleteUser']);
+	if (isset($_POST['btn_delete'])) {
 		$db = get_connection();
-		$deletion = $db->prepare("CALL DeleteUser(?)");
-		$deletion->bind_param('s', $_SESSION["Username"]);
+		$deletion = $_POST['Username'];
+		$sql = "CALL DeleteUser('$deletion')";
+		$result = $db->query($sql);
+
+		if ($deletion) {
+			echo "User Deleted";
+		}
 	}
 	?>
 

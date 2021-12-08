@@ -164,9 +164,9 @@ else {
 	</form>
 
 	<?php
-	if (isset($_POST["something"])) {
-		echo "You entered: " . $_POST['something'] . " <br>";
-	}
+	//if (isset($_POST["something"])) {
+		//echo "You entered: " . $_POST['something'] . " <br>";
+	//}
 
 	if (isset($_POST["dropdown"])) {
 		for($i = 0; $i < count($rows); $i++) {
