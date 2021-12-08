@@ -172,7 +172,7 @@
 		}
 	}	
 	?>
-
+	<hr class="my-4">
 	<form name="my_form" method="post" action="employee.php">
 		Username: <input type="text" name="Username" placeholder="username"><br/>
 		<input type="submit" name="btn_delete" value="delete user"/>
