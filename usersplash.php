@@ -113,16 +113,74 @@ else {
 		</div>
 	</div>
 
-<!--Can add Potential Sidebar or just add clickable tabs on the side. Potentially a dropdown view -->
-
 	<!-- User Menu -->
-	<div class="dropdown">
-		<button class="dropbtn">Menu</button>
-		<div class="dropdown-content">
+<div class="dropdown">
+	<button class="dropbtn">Menu</button>
+	<div class="dropdown-content">
 		<a href="tables.php">Find A Shelter</a>
 		<a href="animals.php">View Animals</a>
 	</div>
 </div>
+
+<!-- PHP -->
+<?php
+
+	$db = get_connection();
+	$query = $db->prepare("SELECT Name FROM Animal");
+	$query->execute();
+
+	$result = $query->get_result();
+	$rows = [];
+
+	while ($row = $result->fetch_assoc()) {
+		$rows []= $row;
+		$rowtext = "\n";
+
+		foreach($row as $column) {
+			$rowtext = $rowtext . "$column";
+		}
+
+		//echo "$rowtext <br>";
+	}
+	?>
+
+	<form action="usersplash.php" method="POST">
+		<label>Choose an Animal:</label>
+	
+	<?php
+
+	// Now let's build a select option dropdown from the rows
+	echo "<select name='dropdown'>";
+
+	foreach($rows as $row) {
+		$rowid = $row['Name'];
+		$rowdata = $row['Name'];
+		echo "<option value='$rowid'>$rowdata</option>";
+	}
+
+	echo "</select>";
+	?>
+		<input type="submit">
+	</form>
+
+	<?php
+	if (isset($_POST["something"])) {
+		echo "You entered: " . $_POST['something'] . " <br>";
+	}
+
+	if (isset($_POST["dropdown"])) {
+		for($i = 0; $i < count($rows); $i++) {
+			if ($rows[$i]['Name'] == $_POST['dropdown']) {
+				echo "You have chosen to adopt " . $_POST['dropdown'] . " <br>";
+				//echo "$rowtext <br>"
+			}
+		}
+	}	
+	?>
+
+
+<!--Can add Potential Sidebar or just add clickable tabs on the side. Potentially a dropdown view -->
+
 	<hr class="my-4">
 
 

@@ -117,87 +117,61 @@
 		</div>
 	</div>
 
-	<!-- Shelter Nav -->
-	<div class="dropdown">
-		<button class="dropbtn">Shelters</button>
-		<div class="dropdown-content">
-		<a href="owlbearsrus.php">Owlbears R Us</a>
-		<a href="chickensanon.php">Chickens Anonymous</a>
-		<a href="shelturtles.php">Shelturtles</a>
-		<a href="fuzzywuzzy.php">Fuzzy Wuzzy Wugglebears</a>
-		<a href="labs2love.php">Labs 2 Love Rescue</a>
-		<a href="hamsters.php">2Many Hamsters</a>
-		<a href="dalmations.php">Dalmations May Cry</a>
-		<a href="furrealfriends.php">Fur Real Friends</a>
-		</div>
-	</div>
+	<!-- PHP -->
+	<?php
 
-	<!-- Cards -->
-	<!-- <div class="container-fluid padding">
-		<div class="row row-cols-6 row-cols-md-2 padding text-center card-deck">
-			<div class="col">
-				<div class="card">
-					<img class="card-imd-top" src="images/dog.png">
-					<div class="card-body">
-						<h4 class="card-title">Dog</h4>
-						<p class="card-text">Some Text</p>
-						<a href="#" class="btn btn-outline-secondary">See Profile</a>
-					</div>
-				</div>
-			</div>
-			<div class=" col">
-				<div class="card" >
-					<img class="card-imd-top" src="images/dog.png">
-					<div class="card-body">
-						<h4 class="card-title">Dog</h4>
-						<p class="card-text">Some Text</p>
-						<a href="#" class="btn btn-outline-secondary">See Profile</a>
-					</div>
-				</div>
-			</div>
-			<div class=" col">
-				<div class="card" >
-					<img class="card-imd-top" src="images/dog.png" id="animal">
-					<div class="card-body">
-						<h4 class="card-title">Dog</h4>
-						<p class="card-text">Some Text</p>
-						<a href="#" class="btn btn-outline-secondary">See Profile</a>
-					</div>
-				</div>
-			</div>
-			<div class=" col">
-				<div class="card">
-					<img class="card-imd-top" src="images/cat.jpg">
-					<div class="card-body">
-						<h4 class="card-title">Cat</h4>
-						<p class="card-text">Some Text</p>
-						<a href="#" class="btn btn-outline-secondary">See Profile</a>
-					</div>
-				</div>
-			</div>
-			<div class=" col">
-				<div class="card">
-					<img class="card-imd-top" src="images/cat.jpg" id="animal">
-					<div class="card-body">
-						<h4 class="card-title">Kitty</h4>
-						<p class="card-text">Some Text</p>
-						<a href="#" class="btn btn-outline-secondary">See Profile</a>
-					</div>
-				</div>
-			</div>
-			<div class=" col">
-				<div class="card">
-					<img class="card-imd-top" src="images/cat.jpg">
-					<div class="card-body">
-						<h4 class="card-title">Cat</h4>
-						<p class="card-text">Some Text</p>
-						<a href="#" class="btn btn-outline-secondary">See Profile</a>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div> -->
+	$db = get_connection();
+	$query = $db->prepare("SELECT Name FROM Shelter");
+	$query->execute();
 
+	$result = $query->get_result();
+	$rows = [];
+
+	while ($row = $result->fetch_assoc()) {
+		$rows []= $row;
+		$rowtext = "\n";
+
+		foreach($row as $column) {
+			$rowtext = $rowtext . "$column";
+		}
+
+		//echo "$rowtext <br>";
+	}
+	?>
+
+	<form action="employee.php" method="POST">
+		<label>Choose a Shelter:</label>
+	
+	<?php
+
+	// Now let's build a select option dropdown from the rows
+	echo "<select name='dropdown'>";
+
+	foreach($rows as $row) {
+		$rowid = $row['Name'];
+		$rowdata = $row['Name'];
+		echo "<option value='$rowid'>$rowdata</option>";
+	}
+
+	echo "</select>";
+	?>
+		<input type="submit">
+	</form>
+
+	<?php
+	if (isset($_POST["something"])) {
+		echo "You entered: " . $_POST['something'] . " <br>";
+	}
+
+	if (isset($_POST["dropdown"])) {
+		for($i = 0; $i < count($rows); $i++) {
+			if ($rows[$i]['Name'] == $_POST['dropdown']) {
+				echo "You entered " . $_POST['dropdown'] . " <br>";
+				//echo "$rowtext <br>"
+			}
+		}
+	}	
+	?>
 
 	<hr class="my-4">
 
@@ -229,69 +203,6 @@
 		</div>
 	</footer>
 	</div>
-
-	<!-- PHP -->
-	<?php
-
-	require_once "config.php";
-
-	if (isset($_SESSION["error"])) {
-	    echo $_SESSION["error"];
-	    unset($_SESSION["error"]);
-	    die();
-	}
-
-	// If true, user is trying to log in
-	if (isset($_POST['Login'])) {
-	    unset($_POST['Login']);
-	    $db = get_connection();
-	    $username = $_POST['USERNAME'];
-	    $password = $_POST['PASSWORD'];
-	    $validation = $db->prepare("SELECT * FROM user WHERE username=?");
-	    $validation->bind_param('s', $username);
-	    if ($validation->execute()) {
-	        //if ($valid_result = $validation->get_result()) {
-	        if (mysqli_stmt_bind_result($validation, $res_id, $res_user, $res_password)) {
-
-	            $result_count = 0;
-
-	            while ($validation->fetch()) {
-	                $result_count++;
-	            }
-
-	            if ($result_count == 0) {
-	                $_SESSION["error"] = "Error: the username and/or password combination was not found";
-	                header("Location: index.php");
-	            }
-	            else {
-	                // Verify user password
-	                //$resx = $valid_result->fetch_array(MYSQLI_ASSOC);
-	                $isGood = password_verify($password, $res_password);
-	                
-	                if ($isGood) {
-	                    $_SESSION["user_id"] = $res_id;
-	                    $_SESSION["username"] = $res_user;
-
-	                    header("Location: register.php");
-	                }
-	                else {
-	                    $_SESSION["error"] = "Error: the username and/or password combination was not found";
-	                    header("Location: index.php");
-	                }
-	            }
-	        }
-	        else {
-	            echo "Error getting result: " . mysqli_error($db);
-	            die();
-	        }
-	    }
-	    else {
-	        echo "Error executing query: " . mysqli_error($db);
-	        die();
-	    }
-	}
-
-	?>
 
 	<!-- Bootstrap JS -->
 	<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
