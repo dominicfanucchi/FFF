@@ -119,7 +119,7 @@ session_start();
 	                    $_SESSION["UserID"] = $res_id;
 	                    $_SESSION["Username"] = $res_user;
 
-	                    header("Location: index.php");
+	                    header("Location: usersplash.php");
 	                }
 	                else {
 	                    $_SESSION["error"] = "Error: the username and/or password combination was not found";
