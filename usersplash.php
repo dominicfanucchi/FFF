@@ -59,7 +59,7 @@
 	<!-- Navigation -->
 	<nav class="navbar navbar-expand-md navbar-light">
 		<div class="container-fluid">
-			<a class="navbar-brand" href="usersplash.php"><img id="logo" src="fourth_logo_round.png"></a>
+			<a class="navbar-brand" href="usersplash.php"><img id="logo" src="images/fourth_logo_round.png"></a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
 				<span class="navbar-toggler-icon"></span>
 			</button>
@@ -70,7 +70,7 @@
 						<a class="nav-link" href="login.php">Login</a>
 					</li> -->
 					<li class="nav-item"> 
-						<button class="btn btn-outline-success" type="button" data-toggle="modal" data-target="#logoutModal">Logout</button>
+			<a href="logout.php" class="btn btn-outline-success" role="button">Logout</a>	
 					</li>
 				</ul>
 			</div>
@@ -80,27 +80,35 @@
 
 	<main class="flex-fill">
 
-	<!-- Logout Modal -->
-	<div id="logoutModal" class="modal fade">
-		<div class="modal-dialog modal-logout">
-			<div class="modal-content">
-				<div class="modal-body">
-					<form action="usersplash.php" method="post">
-						<div class="form-group">
-							<input type="submit" class="btn btn-primary btn-block btn-lg" value="Logout" name="">
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
-	</div>
-
-
 	<!-- Dashboard -->
 	<div class="container-fluid padding">
 		<div class="row welcome text-center">
 			<div class="col-12">
 				<h1 class="display-4">Dashboard</h1>
+<!--
+<h1>
+<?php
+/*
+require_once "config.php";
+
+if (isset($_SESSION["error"])) {
+	echo $_SESSION["error"];
+	unset($_SESSION["error"]);
+	die();
+}
+
+if (isset($_SESSION['user_id'])) {
+	echo "<a href='logout.php'>Log out</a><br>";
+	echo "Welcome, " . $_SESSION["username"];
+	// Code to handle registered user interactions
+}
+else {
+	header("Location: index.php");
+}
+ */
+?>
+</h1>
+          -->
 			</div>
 			<hr>
 		</div>
@@ -150,17 +158,6 @@
 	</div>
 
 	<!-- PHP -->
-<?php
-
-require_once "config.php";
-
-if (isset($_SESSION["error"])) {
-	echo $_SESSION["error"];
-	unset($_SESSION["error"]);
-	die();
-}
-
-?>
 
 	<!-- Bootstrap JS -->
 	<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
