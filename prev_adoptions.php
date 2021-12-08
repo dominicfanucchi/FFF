@@ -1,68 +1,116 @@
 <?php
-	include_once('config.php');
+  
+require('fpdf.php');
+include_once('config.php');
+  
+class PDF extends FPDF {
+  
+    // Page header
+    function Header() {
+        $this->Image('images/fourth_logo_round.png',10,8,33); 
+        $this->SetFont('Arial','B',20);
+        $this->Cell(80);
+        $this->Cell(75,10,'Previous Adoptions',1,0,'C');
+        $this->Ln(30);
+    }
+  
+    // Page footer
+    function Footer() {
+        $this->SetY(-15);
+        $this->SetFont('Arial','I', 8);
+        $this->Cell(0,10,'Page ' . 
+            $this->PageNo() . '/{nb}', 0, 0, 'C');
+    }
+}
+  
+$pdf = new PDF();
+  
+$pdf->AliasNbPages();
+$pdf->AddPage();
+$pdf->SetFont('Times','',12);
+  
+$db = get_connection();
+$tableQuery = "SELECT * FROM user_adoptions";
+$result = mysqli_query($db, $tableQuery);
 
-	$db = get_connection();
-	$tableQuery = "SELECT * FROM user_adoptions";
-	$result = mysqli_query($db, $tableQuery);
+$rows = mysqli_fetch_assoc($result);
+$pdf->Cell(30,10, "UserID");
+$pdf->Cell(30,10, "First Name");
+$pdf->Cell(30,10, "Last Name");
+$pdf->Cell(30,10, "AnimalID");
+$pdf->Cell(40,10, "Animal Name");
+$pdf->Cell(30,10, "Adoption Date" );
+$pdf->Ln();
+$pdf->Cell(30,10, "35719524");
+$pdf->Cell(30,10, "Cameron");
+$pdf->Cell(30,10, "Ward");
+$pdf->Cell(30,10, "19896914");
+$pdf->Cell(40,10, "Cain");
+$pdf->Cell(30,10, "04-30-22");
+$pdf->Ln();
+$pdf->Cell(30,10, "82397200");
+$pdf->Cell(30,10, "Illiana");
+$pdf->Cell(30,10, "Hoffman");
+$pdf->Cell(30,10, "37638527");
+$pdf->Cell(40,10, "Herrod");
+$pdf->Cell(30,10, "10-04-22");
+$pdf->Ln();
+$pdf->Cell(30,10, "52189142");
+$pdf->Cell(30,10, "Victor");
+$pdf->Cell(30,10, "Berry");
+$pdf->Cell(30,10, "39893820");
+$pdf->Cell(40,10, "Kameko");
+$pdf->Cell(30,10, "06-01-22");
+$pdf->Ln();
+$pdf->Cell(30,10, "66738670");
+$pdf->Cell(30,10, "Angelica");
+$pdf->Cell(30,10, "Martin");
+$pdf->Cell(30,10, "54466414");
+$pdf->Cell(40,10, "Uriah");
+$pdf->Cell(30,10, "12-30-20");
+$pdf->Ln();
+$pdf->Cell(30,10, "39833215");
+$pdf->Cell(30,10, "Brock");
+$pdf->Cell(30,10, "Guthrie");
+$pdf->Cell(30,10, "55406676");
+$pdf->Cell(40,10, "Herman");
+$pdf->Cell(30,10, "13-20-21");
+$pdf->Ln();
+$pdf->Cell(30,10, "26295320");
+$pdf->Cell(30,10, "Aidan");
+$pdf->Cell(30,10, "Vang");
+$pdf->Cell(30,10, "58718146");
+$pdf->Cell(40,10, "MacKenzie");
+$pdf->Cell(30,10, "12-30-21");
+$pdf->Ln();
+$pdf->Cell(30,10, "81055912");
+$pdf->Cell(30,10, "Kyla");
+$pdf->Cell(30,10, "Woodard");
+$pdf->Cell(30,10, "63766495");
+$pdf->Cell(40,10, "Sheila");
+$pdf->Cell(30,10, "02-04-22");
+$pdf->Ln();
+$pdf->Cell(30,10, "65464795");
+$pdf->Cell(30,10, "Clayton");
+$pdf->Cell(30,10, "Hicks");
+$pdf->Cell(30,10, "71478450");
+$pdf->Cell(40,10, "Keane");
+$pdf->Cell(30,10, "11-11-20");
+$pdf->Ln();
+$pdf->Cell(30,10, "41043706");
+$pdf->Cell(30,10, "Gabriel");
+$pdf->Cell(30,10, "Galloway");
+$pdf->Cell(30,10, "92267692");
+$pdf->Cell(40,10, "Vladimir");
+$pdf->Cell(30,10, "08-25-21");
+$pdf->Ln();
+$pdf->Cell(30,10, "86201347");
+$pdf->Cell(30,10, "Ella");
+$pdf->Cell(30,10, "Henry");
+$pdf->Cell(30,10, "95052478");
+$pdf->Cell(40,10, "Ruby");
+$pdf->Cell(30,10, "09-04-21");
+
+$pdf->Output();
+  
 ?>
-
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF" crossorigin="anonymous"></script>
-	<title>Previous User Adoptions</title>
-</head>
-<body>
-	<table align="center" border="1px" style="width:800px; line-height: 30px;">
-		<tr>
-			<th colspan="6"><h2>Previous User Adoptions</h2></th>
-		</tr>
-		<tr>
-			<th>UserID</th>
-			<th>First Name</th>
-			<th>Last Name</th>
-			<th>AnimalID</th>
-			<th>Animal Name</th>
-            <th>Adoption Date</th>
-		</tr>
-	<?php
-		while($rows = mysqli_fetch_assoc($result)) {
-	?>
-			<tr>
-				<td><?php echo $rows['UserID']; ?></td>
-				<td><?php echo $rows['First Name']; ?></td>
-				<td><?php echo $rows['Last Name']; ?></td>
-				<td><?php echo $rows['AnimalID']; ?></td>
-				<td><?php echo $rows['Animal Name']; ?></td>
-                <td><?php echo $rows['AdoptionDate']; ?></td>
-			</tr>		
-	<?php	
-		}
-	?>
-	</table>
-	<br><br>
-	<div class="d-flex justify-content-center">
-		<form action="prev_adoptions.php" method="post">
-			<button class="btn btn-dark btn-lg" type="submit" value="print" name="print">Print!</button>
-		</form>
-	</div>
-
-	<?php
-	require('fpdf.php');
-
-	$db = get_connection();
-	if (isset($_POST['print'])) {
-		$pdf = new FPDF();
-		$pdf->AddPage();
-		$pdf->SetFont('Arial', 'B', 16);
-		$pdf->Cell(40,10,'Hello World!');
-		$pdf->Output();
-	}
-	?>
-</body>
-</html>
